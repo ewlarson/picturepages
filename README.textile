@@ -4,7 +4,7 @@ By Eric Larson
 
 h2. Code4Lib 2012 Lighting Presentation
 
-<script src="http://speakerdeck.com/embed/4f319d7dc583b400220037ce.js"></script>
+h3. See these slides
 
 "http://speakerdeck.com/u/ewlarson/p/finding-images-in-book-page-images": http://speakerdeck.com/u/ewlarson/p/finding-images-in-book-page-images
 
