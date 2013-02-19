@@ -1,5 +1,3 @@
-#!/usr/bin/ruby
-
 # === Author ===
 # * Eric Larson
 # * UW-Madison Libraries
@@ -34,22 +32,26 @@ Dir.glob('british_flora/*').each do |file|
   filename = file.split("/").last.gsub(".jpg", "")
   
   # 1) Desaturate the image
-  `convert #{file} -colorspace Gray british_flora/working/#{filename}G.jpg`
+  # `convert #{file} -colorspace Gray british_flora/working/#{filename}G.jpg`
   
   # 2) Contrast x 8!
-  `convert british_flora/working/#{filename}G.jpg -contrast -contrast -contrast -contrast -contrast -contrast -contrast -contrast british_flora/working/#{filename}C.jpg`
+  # `convert british_flora/working/#{filename}G.jpg -contrast -contrast -contrast -contrast -contrast -contrast -contrast -contrast british_flora/working/#{filename}C.jpg`
   
   # 3) Convert image to 1px x height
-  `convert british_flora/working/#{filename}C.jpg -resize 1x1500! british_flora/working/#{filename}V.jpg`
+  # `convert british_flora/working/#{filename}C.jpg -resize 1x1500! british_flora/working/#{filename}V.jpg`
   
   # 4) Sharpen the image
-  `convert british_flora/working/#{filename}V.jpg -sharpen 0x5 british_flora/working/#{filename}S.jpg`
+  # `convert british_flora/working/#{filename}V.jpg -sharpen 0x5 british_flora/working/#{filename}S.jpg`
 
   # 5) Heavy-handed grayscale conversion
-  `convert british_flora/working/#{filename}S.jpg -negate -threshold 0 -negate british_flora/working/#{filename}N.jpg`
+  # `convert british_flora/working/#{filename}S.jpg -negate -threshold 0 -negate british_flora/working/#{filename}N.jpg`
 
   # 6) Color list
-  `convert british_flora/working/#{filename}N.jpg TXT:british_flora/working/#{filename}.txt`
+  # `convert british_flora/working/#{filename}N.jpg TXT:british_flora/working/#{filename}.txt`
+  
+  # *) Much faster version of steps 1-6, calling convert just twice
+  ` convert #{file} -colorspace Gray -contrast -contrast -contrast -contrast -contrast -contrast -contrast -contrast -resize 1X1500! -sharpen 0x5 miff:- | \
+    convert - -negate -threshold 0 -negate TXT:british_flora/working/#{filename}.txt`
 
   # 7) More than 200 black pixels in a row is an IMAGE
   begin
@@ -72,7 +74,7 @@ Dir.glob('british_flora/*').each do |file|
       end
     end
   rescue
-    img_count = Dir.entries("british_flora/images").size
+    img_count = Dir.entries("british_flora/images").size - 2 # '.' and '..' are not interesting
     puts "\nComplete - Found #{img_count} images / Expected 34 images"
   end
 end
