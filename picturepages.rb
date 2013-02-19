@@ -27,7 +27,7 @@
  `curl 'http://ia600309.us.archive.org/BookReader/BookReaderImages.php?zip=/33/items/britishfloramedi01bartuoft/britishfloramedi01bartuoft_jp2.zip&file=britishfloramedi01bartuoft_jp2/britishfloramedi01bartuoft_[0000-0482].jp2&scale=2&rotate=0' -o "british_flora/file_#1.jpg"`
 
 # 3) Walk the book page images, detect images within images
-Dir.glob('british_flora/*').each do |file|
+Dir.glob('british_flora/*.jpg').each do |file|
   
   filename = file.split("/").last.gsub(".jpg", "")
   
